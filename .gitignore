@@ -12,6 +12,7 @@ env/
 
 # FFmpeg generated media
 *.mp4
+!data/input/source.mp4
 *.mkv
 *.avi
 *.mov
