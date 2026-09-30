@@ -1,0 +1,66 @@
+# Cau hinh thi nghiem Per-Title Bitrate Ladder Selection (muc thu nghiem).
+# Day KHONG phai cau hinh toi uu thuong mai.
+
+codec: libx264
+preset: veryfast
+tune: null
+pixel_format: yuv420p
+keyframe_interval_seconds: 2.0
+audio: false
+two_pass: false
+
+# Baseline rut gon tu bang H.264 trong Apple HLS Authoring Specification.
+# 432p dung hang 768x432 @ 730 kbps cua Apple; khong bia hang 480p.
+fixed_ladder:
+  - { name: "360p", height: 360, bitrate_kbps: 365 }
+  - { name: "432p", height: 432, bitrate_kbps: 730 }
+  - { name: "720p", height: 720, bitrate_kbps: 3000 }
+  - { name: "1080p", height: 1080, bitrate_kbps: 6000 }
+
+complexity:
+  sample_fps: 2.0
+  max_frames: 40
+  analysis_width: 320
+  si_ref: 80.0
+  ti_ref: 40.0
+  easy_max: 0.35
+  hard_min: 0.65
+  k_easy: 0.65
+  k_medium: 1.0
+  k_hard: 1.35
+  bitrate_step_kbps: 50
+  min_bitrate_kbps: 150
+  max_bitrate_kbps: 8000
+
+probe:
+  enabled: false
+  duration_seconds: 8
+  crf: 23
+
+quality:
+  psnr: true
+  ssim: true
+  vmaf: true
+  vmaf_model: version=vmaf_v0.6.1
+
+# Resolution x bitrate grid. Heights taller than the source are dropped (no upscale).
+# 432p follows the Apple H.264 768x432 rung already used in fixed_ladder.
+candidates:
+  - height: 360
+    bitrates_kbps: [250, 365, 500, 700]
+  - height: 432
+    bitrates_kbps: [500, 730, 1000, 1500]
+  - height: 720
+    bitrates_kbps: [1000, 1500, 2000, 3000]
+  - height: 1080
+    bitrates_kbps: [2000, 3000, 4500, 6000]
+
+# Practical ABR constraints on hull points. This is hull-based selection, not a global optimum.
+ladder_selection:
+  max_representations: 4
+  min_vmaf: 0
+  prefer_one_per_height: true
+
+paths:
+  output_dir: results
+  sample_dir: data/samples

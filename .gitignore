@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# FFmpeg generated media
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.webm
+
+# Generated encoding results
+data/output/
+data/encoded/
+data/candidates/
+
+# Generated VMAF JSON
+data/input/*.json
+
+# Generated reports / plots
+reports/generated/
+outputs/
+results/
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store

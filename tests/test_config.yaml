@@ -1,0 +1,39 @@
+codec: libx264
+preset: ultrafast
+pixel_format: yuv420p
+keyframe_interval_seconds: 1.0
+audio: false
+two_pass: false
+fixed_ladder:
+  - { name: "360p", height: 360, bitrate_kbps: 365 }
+  - { name: "432p", height: 432, bitrate_kbps: 730 }
+complexity:
+  sample_fps: 4.0
+  max_frames: 12
+  analysis_width: 160
+  si_ref: 80.0
+  ti_ref: 40.0
+  easy_max: 0.35
+  hard_min: 0.65
+  k_easy: 0.65
+  k_medium: 1.0
+  k_hard: 1.35
+  bitrate_step_kbps: 50
+  min_bitrate_kbps: 150
+  max_bitrate_kbps: 8000
+probe:
+  enabled: false
+quality:
+  psnr: true
+  ssim: true
+  vmaf: true
+  vmaf_model: version=vmaf_v0.6.1
+candidates:
+  - height: 360
+    bitrates_kbps: [300, 500]
+  - height: 720
+    bitrates_kbps: [1000, 1500]
+ladder_selection:
+  max_representations: 4
+  min_vmaf: 0
+  prefer_one_per_height: true
